@@ -4,23 +4,23 @@ const { pendingWishes } = require('../../../sharedData.js');
 require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
-        host: process.env.MAIL_HOST,
-        port: process.env.MAIL_PORT,
-        auth: {
-            user: process.env.MAIL_USER,
-            pass: process.env.MAIL_PASS
-        }
-    });
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
+    auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
+    }
+});
 
 /**
- * Returns a Message header for the mail
+ * Returns a Message header for the mail(Santa)
  * 
  */
 const createMessageHeader = () => ({
-        from: 'do_not_reply@northpole.com',
-        to: 'santa@northpole.com',
-        subject: 'Pending Wishes!',
-    });
+    from: 'do_not_reply@northpole.com',
+    to: 'santa@northpole.com',
+    subject: 'Pending Wishes!',
+});
 
 /**
  * Returns a Message text for the mail
@@ -50,13 +50,13 @@ const invokeSend = (msg) => transporter.sendMail(msg);
 const sendMessage = () => {
     try {
         let message = {};
-        
+
         const messageHeader = createMessageHeader();
         const text = createMessageText();
 
-        message = {...messageHeader, text}
+        message = { ...messageHeader, text }
         invokeSend(message);
-    } catch(e) {
+    } catch (e) {
         console.log(e);
     }
 }

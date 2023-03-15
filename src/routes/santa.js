@@ -19,37 +19,37 @@ const {
 } = require('../santaHelper.js')
 
 // DEFINE ENDPOINTS
-santaRouter.get('', async(req, res) => {
+santaRouter.get('', async (req, res) => {
     res.render('santa');
 });
-
-santaRouter.post('', async(req,res) => {
+// Set router-Anil Mishra
+santaRouter.post('', async (req, res) => {
     try {
-        const {username, wish} = req.body;
+        const { username, wish } = req.body;
         if (isUserIdAllSpaces(username)) {
             renderErrorScreen(res, ERROR.childNotRegistered);
             return;
         }
- 
+
         // Get registered users from URL
         const registeredUsers = await getRegisteredUsersFromURL();
 
         // From the registered users, search the input user. If exist, return userId
         const user = searchUser(registeredUsers.data, username);
-        
+
         // Is child not registered?
         if (user === null || user === undefined) {
             renderErrorScreen(res, ERROR.childNotRegistered);
             return;
         }
-       
+
         const userId = user.uid;
 
         // Get user profile from URL
         const userProfileInfo = await getUserProfilesFromURL(); // [userUid, address, birthdate]
         // Get user profile
         const userProfile = searchUserProfile(userProfileInfo.data, userId);
-        const {address , birthdate} = userProfile;
+        const { address, birthdate } = userProfile;
 
         // Is Date format not valid?
         if (!isDateFormatValid(birthdate)) {
@@ -64,10 +64,10 @@ santaRouter.post('', async(req,res) => {
         }
 
         // Push the wish to the global variable
-        pendingWishes.push({username, address, wish});
+        pendingWishes.push({ username, address, wish });
         renderConfirmScreen(res);
 
-    } catch(e) {
+    } catch (e) {
         console.log(e);
         renderErrorScreen(res, ERROR.internalError);
     }

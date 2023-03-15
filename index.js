@@ -9,7 +9,7 @@ app.use(express.urlencoded({
   extended: true
 }));
 
-// Static files
+// Static files-Anil Mishra
 app.use(express.static('public'));
 app.use('/css', express.static(`${__dirname}public/css`));
 app.use('/img', express.static(`${__dirname}public/img`));
@@ -25,6 +25,6 @@ app.use('/', santaRouter);
 
 // Listen to port
 app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-    mailTimer.start();
+  console.log(`Listening on port ${port}`);
+  mailTimer.start();
 });
